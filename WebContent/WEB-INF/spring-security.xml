@@ -6,8 +6,14 @@
 	http://www.springframework.org/schema/security
 	http://www.springframework.org/schema/security/spring-security-4.2.xsd">
 
+	<http pattern="/welcome*" security="none"/>
 	<http auto-config="true">
-		<intercept-url pattern="/admin" access="hasRole('ROLE_USER')"/>
+		<intercept-url pattern="/admin*" access="hasRole('ROLE_ADMIN')"/>
+		<intercept-url pattern="/add*" access="hasAnyRole('ROLE_USER')"/>
+		<logout invalidate-session="true" 
+        logout-success-url="/welcome" 
+        logout-url="/logout" delete-cookies="JSESSIONID" />
+        <access-denied-handler error-page="/error404.jsp"/>
 	</http>
 
 	<authentication-manager>
@@ -16,9 +22,12 @@
 	    <!--  There is no PasswordEncoder mapped for the id “null” 
 	    		{noop} is needed to avoid above error in Spring 5
 	    -->
-		<user name="dtarika" password="{noop}1234567" authorities="ROLE_USER" />
+		<user name="dtarika" password="{noop}1234567" authorities="ROLE_ADMIN" />
+		<user name="dsingh" password="{noop}1234567" authorities="ROLE_ADMIN, ROLE_USER" />
 	    </user-service>
 	  </authentication-provider>
 	</authentication-manager>
+	
+	
 
 </beans:beans>

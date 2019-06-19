@@ -9,7 +9,6 @@
 <body>
 	Welcome <%=request.getAttribute("name") %>
 	Result is <%=request.getAttribute("result") %> 
-	Result displayed using EL is ${result}
 	<%=request.getAttribute("msg") %>
 </body>
 </html>
