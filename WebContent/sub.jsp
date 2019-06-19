@@ -4,7 +4,7 @@
 <title>SpringMVCDemo</title>
 </head>
 <body>
-<form action="add">
+<form action="sub">
 	<input type="text" name="t1"></br>
 	<input type="text" name="t2"></br>
 	<input type="submit">

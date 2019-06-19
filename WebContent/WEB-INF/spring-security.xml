@@ -6,14 +6,19 @@
 	http://www.springframework.org/schema/security
 	http://www.springframework.org/schema/security/spring-security-4.2.xsd">
 
-	<http pattern="/welcome*" security="none"/>
+	<http pattern="/index.jsp" security="none"/>
 	<http auto-config="true">
-		<intercept-url pattern="/admin*" access="hasRole('ROLE_ADMIN')"/>
-		<intercept-url pattern="/add*" access="hasAnyRole('ROLE_USER')"/>
+		<intercept-url pattern="/welcome*" 
+			access="hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_ADD','ROLE_SUB')"/>
+		<intercept-url pattern="/add*" 
+			access="hasAnyRole('ROLE_ADD')"/>
+		<intercept-url pattern="/sub*" 
+			access="hasAnyRole('ROLE_SUB')"/>
 		<logout invalidate-session="true" 
-        logout-success-url="/welcome" 
+        logout-success-url="/index" 
         logout-url="/logout" delete-cookies="JSESSIONID" />
-        <access-denied-handler error-page="/error404.jsp"/>
+        <access-denied-handler error-page="/unauthorized.jsp"/>
+        <session-management invalid-session-url="/index.jsp"/>
 	</http>
 
 	<authentication-manager>
@@ -22,12 +27,12 @@
 	    <!--  There is no PasswordEncoder mapped for the id “null” 
 	    		{noop} is needed to avoid above error in Spring 5
 	    -->
-		<user name="dtarika" password="{noop}1234567" authorities="ROLE_ADMIN" />
-		<user name="dsingh" password="{noop}1234567" authorities="ROLE_ADMIN, ROLE_USER" />
+		<user name="admin" password="{noop}admin" authorities="ROLE_ADMIN" />
+		<user name="dsingh" password="{noop}dsingh" authorities="ROLE_ADMIN, ROLE_USER" />
+		<user name="add" password="{noop}add" authorities="ROLE_ADD, ROLE_USER" />
+		<user name="subtract" password="{noop}subtract" authorities="ROLE_SUB, ROLE_USER" />
 	    </user-service>
 	  </authentication-provider>
 	</authentication-manager>
-	
-	
-
+	<beans:bean class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" /> 
 </beans:beans>

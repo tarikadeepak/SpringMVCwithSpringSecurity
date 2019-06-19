@@ -2,8 +2,13 @@
 <%@page session="true"%>
 <html>
 <body>
-	<h1>Title : ${title}</h1>	
-	<h1>Message : ${message}</h1>
-	<a href="<c:url value="/add.jsp"/>" > Add</a></h2>  
+	<c:if test="${pageContext.request.userPrincipal.name != null}">
+	   <h2>Welcome : ${pageContext.request.userPrincipal.name} 
+            <a href="<c:url value="/logout" />"> <p margin-right=20px>Logout</p></a></h2>
+           </br>
+           <a href="<c:url value="/add.jsp"/>" > Add</a> 
+           &nbsp;
+           <a href="<c:url value="/sub.jsp"/>" > Subtract</a> 
+	</c:if>
 </body>
 </html>
